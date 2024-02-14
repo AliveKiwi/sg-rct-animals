@@ -1,30 +1,27 @@
-// import { useState } from 'react';
+import { useState } from 'react';
+import AnimalShow from './AnimalShow';
 
-function useState(defaultValue) {
-  return {
-    yourState: defaultValue,
-    yourSetter: () => {},
-  };
+function getRandomAnimal() {
+  const animals = ['bird', 'cat', 'cow', 'dog', 'gator', 'horse'];
+
+  return animals[Math.floor(Math.random() * animals.length)];
 }
 
 function App() {
-  //   const [count, setCount] = useState(0);
-
-  // Why useState use Array Destructuring instead of Object Destructuring?Because it requires more effort
-  const stateConfig = useState(0);
-
-  //   const count = stateConfig.yourState;
-  //   const setCount = stateConfig.yourSetter;
-  const { yourState: count, yourSetter: setCount } = stateConfig;
+  const [animals, setAnimals] = useState([]);
 
   const handleClick = () => {
-    setCount(count + 1);
+    setAnimals([...animals, getRandomAnimal()]);
   };
+
+  const renderedAnimals = animals.map((animal, index) => {
+    return <AnimalShow type={animal} key={index} />;
+  });
 
   return (
     <div>
       <button onClick={handleClick}>Add Animal</button>
-      <div>Number of animals: {count}</div>
+      <div>{renderedAnimals}</div>
     </div>
   );
 }
